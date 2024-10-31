@@ -1,4 +1,4 @@
-from app.gql.types import MissionType
+from app.gql.types import MissionType, MissonLimtedType
 from graphene import ObjectType, List, String, Field, Int
 import app.database.repository.mission_repository as mission_repos
 from sqlalchemy import Date
@@ -9,7 +9,7 @@ class Query(ObjectType):
     missions_by_date = List(MissionType, mission_date=String())
     missions_by_country = List(MissionType, country=String())
     missions_by_target_industry = List(MissionType, industry=String())
-    mission_results_by_target_type = List(MissionType, target_type=String())
+    mission_results_by_target_type = List(MissonLimtedType, target_type=String())
 
 
     @staticmethod
