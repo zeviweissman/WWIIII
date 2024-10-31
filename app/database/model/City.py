@@ -1,6 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from app.settings.psql_config import Base
-from sqlalchemy.orm import relationship
 
 class City(Base):
     __tablename__ = "cities"
