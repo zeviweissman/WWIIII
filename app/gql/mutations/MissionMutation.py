@@ -31,3 +31,16 @@ class EditMission(Mutation):
       mission = (mission_repos.update_mission(mission_input)
                  .value_or(None))
       return EditMission(mission=mission) if mission else EditMission(success=False)
+
+
+class DeleteMission(Mutation):
+   class Arguments():
+      mission_id = Int(required=True)
+   mission = Field(MissionType, default_value=None)
+   success = Field(Boolean, default_value=True)
+
+   @staticmethod
+   def mutate(root, info, mission_id: int):
+      mission = (mission_repos.delete_mission_by_id(mission_id)
+                 .value_or(None))
+      return DeleteMission(mission=mission) if mission else DeleteMission(success=False)
