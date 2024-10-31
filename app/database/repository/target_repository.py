@@ -1,5 +1,7 @@
 from app.database.model import Target
-from returns.result import Result
+from returns.result import Result, Failure, Success
+from app.database.connection.psql import get_session
+from sqlalchemy.exc import SQLAlchemyError
 
 
 def insert_target(target: Target) -> Result[Target, str]:

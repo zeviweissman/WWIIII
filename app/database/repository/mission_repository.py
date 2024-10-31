@@ -85,3 +85,15 @@ def update_mission(mission_input: MissionUpdateInput) -> Result[Mission, str]:
         except SQLAlchemyError as e:
             session.rollback()
             return Failure(str(e))
+
+
+def delete_mission_by_id(mission_id):
+    with get_session() as session:
+        try:
+            mission_to_delete = session.get(Mission, mission_id)
+            session.delete(mission_to_delete)
+            session.commit()
+            return Success(mission_to_delete)
+        except SQLAlchemyError as e:
+            session.rollback()
+            return Failure(str(e))
