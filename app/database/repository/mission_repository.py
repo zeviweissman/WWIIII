@@ -85,9 +85,18 @@ def delete_mission_by_id(mission_id):
     with get_session() as session:
         try:
             mission_to_delete = session.get(Mission, mission_id)
-            session.delete(mission_to_delete)
+            session.delete(mission_to_delete, cascade="all orphan")
             session.commit()
             return Success(mission_to_delete)
         except SQLAlchemyError as e:
             session.rollback()
             return Failure(str(e))
+
+
+def get_mission_by_city(city: str) -> List[Mission]:
+    with get_session() as session:
+        return (session.query(Mission)
+                .join(Target)
+                .join(City)
+                .filter(City.city_name == city)
+                .all())
