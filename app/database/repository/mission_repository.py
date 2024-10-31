@@ -1,4 +1,5 @@
 from app.database.connection.psql import get_session
+from app.database.repository.utils import mission_model_for_update
 from app.gql.inputs import MissionUpdateInput
 from returns.maybe import Maybe
 from returns.result import Success, Failure, Result
@@ -71,14 +72,7 @@ def update_mission(mission_input: MissionUpdateInput) -> Result[Mission, str]:
     with get_session() as session:
         try:
             mission_to_update = session.get(Mission, mission_input.mission_id)
-            if mission_input.aircraft_returned:
-                mission_to_update.aircraft_returned = mission_input.aircraft_returned
-            if mission_input.aircraft_failed:
-                mission_to_update.aircraft_failed = mission_input.aircraft_failed
-            if mission_input.aircraft_damaged:
-                mission_to_update.aircraft_damaged = mission_input.aircraft_damaged
-            if mission_input.aircraft_lost:
-                mission_to_update.aircraft_lost = mission_input.aircraft_lost
+            mission_model_for_update(mission_to_update, mission_input)
             session.commit()
             session.refresh(mission_to_update)
             return Success(mission_to_update)
