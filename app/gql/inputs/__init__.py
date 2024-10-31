@@ -1,2 +1,2 @@
-from .MissionInput import MissionInput
+from .MissionInput import MissionUpdateInput, MissionInsertInput
 from .TargetInput import TargetInput
