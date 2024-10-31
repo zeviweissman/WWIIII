@@ -13,7 +13,7 @@ class MissionInsertInput(InputObjectType):
 
 
 class MissionUpdateInput(InputObjectType):
-    mission_id = Int()
+    mission_id = Int(required=True)
     aircraft_returned = Float()
     aircraft_failed = Float()
     aircraft_damaged = Float()
